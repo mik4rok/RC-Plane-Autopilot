@@ -40,7 +40,7 @@ float prev_yaw_error = 0;
 void servo_setup() {
   AilServo.attach(8);
   EleServo.attach(9);
-  YawServo.attach(9);
+  YawServo.attach(10);
 }
 
 
