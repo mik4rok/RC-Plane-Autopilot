@@ -84,7 +84,7 @@ void IMUsetup(void) {
   }
 
   Serial.println("");
-  delay(100);
+  delay(5000); // weit before calibrate Acc
 }
 
 // Declare a function to return sensor data.
