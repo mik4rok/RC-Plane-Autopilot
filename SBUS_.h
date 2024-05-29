@@ -1,6 +1,9 @@
 #include <sbus.h>
 #include <HardwareSerial.h>
 
+float offset_x = 0.0; //Set Variables for main code 
+float offset_y = 0.0;
+float offset_z = 0.0;
 
 int Thr = 0;
 int Ail = 0;
