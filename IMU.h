@@ -57,7 +57,7 @@ void IMUsetup(void) {
     break;
   }
 
-  mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
+  mpu.setFilterBandwidth(MPU6050_BAND_184_HZ);
   Serial.print("Filter bandwidth set to: ");
   switch (mpu.getFilterBandwidth()) {
   case MPU6050_BAND_260_HZ:
@@ -102,6 +102,30 @@ void getSensorData(float &gyro_x, float &gyro_y, float &gyro_z, float &orientati
   orientation_y = a.acceleration.y;
   orientation_z = a.acceleration.z;
 }
+
+//Getting offset fo accelerator
+void IMUcalibrate(float *offset_x, float *offset_y, float *offset_z) {
+  float gyro_x, gyro_y, gyro_z, GyX, GyY, GyZ;
+
+  float gx = 0.0; float gy = 0.0; float gz = 0.0; //gyro offsets sum
+  
+  for (int i = 0; i < 500; i++) {
+    getSensorData(gyro_x, gyro_y, gyro_z, GyX, GyY, GyZ);
+    gx += GyX; gy += GyY; gz += GyZ;
+  }
+  *offset_x = gx / 500.0;
+  *offset_y = gy / 500.0;
+  *offset_z = gz / 500.0;
+
+  Serial.print("Gyro offsets ");
+  Serial.print(*offset_x);
+  Serial.print(", ");
+  Serial.print(*offset_y);
+  Serial.print(", ");
+  Serial.println(*offset_z);
+  Serial.println("corrected gyro values follow");
+}
+//
 
 float roll_output = 0, pitch_output = 0, yaw_output = 0;
 
