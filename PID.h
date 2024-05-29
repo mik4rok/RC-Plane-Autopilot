@@ -107,11 +107,11 @@ void pid_update(float &orientation_z, float &orientation_y, float &gyro_z, float
 void PIDmain(float roll_output, float pitch_output, float yaw_output, float Thr) {
   // Calculate PWM values
 
-  int roll_pwm = map(roll_output, -90, 90, 1800, 1200);
-  int pitch_pwm = map(pitch_output, -90, 90, 1200, 1800);
-  int yaw_pwm = map(yaw_output, -100, 100, 1000, 600);
-  int yaw_pwm_mix = yaw_pwm + (Thr * 0.62); //mixing thr 
-  yaw_pwm_mix = constrain(yaw_pwm, 600, 1000);
+  int roll_pwm = map(roll_output, -90, 90, 1900, 1100);
+  int pitch_pwm = map(pitch_output, -90, 90, 1100, 1900);
+  int yaw_pwm = map(yaw_output, -100, 100, 1900, 1100);
+  //int yaw_pwm_mix = yaw_pwm + (Thr * 0.62); //mixing thr unusable in this time
+  //yaw_pwm_mix = constrain(yaw_pwm, 600, 1000);
 
 
 
@@ -123,15 +123,16 @@ void PIDmain(float roll_output, float pitch_output, float yaw_output, float Thr)
     }
 
     analogWrite(1, Thr);
-    AilServo.writeMicroseconds(roll_pwm);   // sets the servo position to its minimum
-    EleServo.writeMicroseconds(pitch_pwm);  // sets the servo position to its minimum
-    YawServo.writeMicroseconds(yaw_pwm);  // sets the servo position to its minimum
+    AilServo.writeMicroseconds(roll_pwm);   // sets the servo roll
+    EleServo.writeMicroseconds(pitch_pwm);  // sets the servo pitch
+    YawServo.writeMicroseconds(yaw_pwm);  // sets the servo yaw
   } else {
     analogWrite(0, 0);
     analogWrite(1, 0);
-    AilServo.writeMicroseconds(1500);  // sets the servo position to its minimum
-    EleServo.writeMicroseconds(1500);  // sets the servo position to its minimum
-    YawServo.writeMicroseconds(1500);  // sets the servo position to its minimum
+    //analogWrite(2, 0);  //May be need?
+    AilServo.writeMicroseconds(1500);  // sets the servo position to its middle
+    EleServo.writeMicroseconds(1500);  // sets the servo position to its middle
+    YawServo.writeMicroseconds(1500);  // sets the servo position to its middle
   }
 
 
