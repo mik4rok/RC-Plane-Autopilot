@@ -6,10 +6,11 @@
 void setup(){
   sbus_setup();
   IMUsetup();
+  IMUcalibrate(&offset_x, &offset_y, &offset_z);
   servo_setup();
 }
 
 void loop(){
   sbus_read();
-  IMUdata();
+  IMUdata(&offset_x, &offset_y, &offset_z);
 }
